@@ -1,0 +1,6 @@
+node_modules
+*.exe
+*.env
+stripe
+stripe.exe
+dist

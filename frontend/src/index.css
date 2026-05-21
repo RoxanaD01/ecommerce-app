@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap');
+
+@import "tailwindcss";
+
+/* Colors */
+:root {
+  --cream:        #FAF7F2;
+  --cream-deep:   #F2EDE4;
+  --blush:        #EAC5BE;
+  --blush-light:  #F5DDD9;
+  --blush-dim:    #D4A49C;
+  --rose:         #C4877D;
+  --sage:         #B8C4B0;
+  --sage-light:   #D8E2D4;
+  --mauve:        #C9B8C4;
+  --text-dark:    #3D3530;
+  --text-mid:     #7A6E6A;
+  --text-soft:    #B0A49F;
+  --text-faint:   #DDD5D0;
+  --white:        #FFFFFF;
+}
+
+*, *::before, *::after { 
+    box-sizing: border-box; 
+}
+
+html { 
+    scroll-behavior: smooth; 
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--text-dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+.playfair {
+    font-family: 'Playfair Display', serif;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { 
+    width: 4px; 
+}
+
+::-webkit-scrollbar-track { 
+    background: var(--cream); 
+}
+
+::-webkit-scrollbar-thumb { 
+    background: var(--blush); 
+    border-radius: 2px; 
+}
+
+/* Active nav link */
+a.active .nav-underline {
+  opacity: 1;
+  transform: scaleX(1);
+}
+ 
+@media (max-width: 640px) {
+  a.active {
+    color: var(--rose);
+    border-left: 2px solid var(--blush);
+  }
+}
+ 
+/* Buttons */
+.btn-blush {
+  background: var(--blush);
+  color: var(--text-dark);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  padding: 0.85rem 2.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.btn-blush:hover {
+  background: var(--blush-dim);
+}
+ 
+.btn-outline-blush {
+  border: 1px solid var(--blush-dim);
+  color: var(--rose);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-outline-blush:hover {
+  background: var(--blush-light);
+  border-color: var(--blush);
+}
+ 
+/* Inputs */
+input[type="email"], input[type="text"], input[type="password"] {
+  background: var(--white);
+  border: 1px solid var(--text-faint);
+  color: var(--text-dark);
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--blush-dim);
+}
+
+input::placeholder { 
+    color: var(--text-soft); 
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
