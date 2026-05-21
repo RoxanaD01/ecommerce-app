@@ -70,7 +70,7 @@ const Product = () => {
       className="pt-10 transition-opacity duration-500 opacity-100"
       style={{ borderTop: "1px solid var(--text-faint)" }}
     >
-      {/* ── Product layout ── */}
+      {/*  Product layout */}
       <div className="flex flex-col sm:flex-row gap-10 sm:gap-14">
         {/* Images */}
         <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">

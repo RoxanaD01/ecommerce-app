@@ -21,11 +21,9 @@ import { ShopContext } from './context/ShopContext'
 import { useContext } from 'react'
 import Profile from './pages/Profile'
 
-// Redirects unauthenticated users to /login.
-// Without this, anyone can navigate directly to /place-order or /orders by typing the URL — no auth check happens on the frontend otherwise.
 const ProtectedRoute = ({ children }) => {
   const { token, tokenLoaded } = useContext(ShopContext)
-  if (!tokenLoaded) return null   // wait for localStorage to be read
+  if (!tokenLoaded) return null 
   return token ? children : <Navigate to='/login' replace />
 }
 

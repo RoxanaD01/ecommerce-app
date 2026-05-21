@@ -17,8 +17,6 @@ const inputStyle = {
 };
 
 const Login = ({ setToken }) => {
-  // In this component we'll call the API where we'll authenticate the user admin
-  // Using email and password bellow we'll authenticate the admin
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,7 +53,6 @@ const Login = ({ setToken }) => {
           boxShadow: "0 8px 40px rgba(196,135,125,0.1)",
         }}
       >
-        {/* Header */}
         <div className="text-center mb-8">
           <p
             className="text-xs mb-4 tracking-widest tracking-[0.3em]"

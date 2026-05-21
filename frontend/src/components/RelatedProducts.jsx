@@ -11,8 +11,6 @@ const RelatedProducts = ({category, subCategory}) => {
     useEffect(() => {
         if (products.length > 0) {
             let productsCopy = products.slice();
-
-            // Compares the selected product's category and subcategory with products array, filter products and display 5 products that have the same category and subcategory
             productsCopy = productsCopy.filter((item) => 
                 category === item.category && 
                 subCategory === item.subCategory);

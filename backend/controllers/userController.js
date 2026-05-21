@@ -1,4 +1,3 @@
-// Here we can create the logic. Using that, we can allow the user to create an account or log in on the website
 import userModel from '../models/userModel.js'
 import validator from 'validator'
 import bcrypt from 'bcrypt'
@@ -10,7 +9,6 @@ const createToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '7d'})
 }
 
-// ----- Route for User Login -----
 const loginUser = async (req, res, next) => {
 
     try {
@@ -21,7 +19,7 @@ const loginUser = async (req, res, next) => {
             return res.status(401).json({ success: false, message: "Invalid credentials" })
         }
 
-        const isMatch = await bcrypt.compare(password, user.password)  // password from body compared with password from DB
+        const isMatch = await bcrypt.compare(password, user.password)  
 
         if (isMatch) {
             const token = createToken(user._id);
@@ -38,18 +36,12 @@ const registerUser = async (req, res, next) => {
    try {
         const { name, email, password } = req.body;
 
-        // Checking if user already exists or not
         const exists = await userModel.findOne({email});
         if(exists) {
-        // 409 Conflict — userul deja există în baza de date
             return res.status(409).json({ success: false, message: 'User already exists' })
         }
 
-        // Validating email format & strong password 
-        // if email & password pass validation then we create the account for the user
-        
         if(!validator.isEmail(email)) { 
-            // 400 Bad Request — datele trimise sunt invalide
             return res.status(400).json({ success: false, message: 'Please enter a valid email' })
         }
 
@@ -60,7 +52,6 @@ const registerUser = async (req, res, next) => {
             minNumbers: 1,
             minSymbols: 1,
         })) {
-            // 400 Bad Request — parola slabă
             return res.status(400).json({success: false, message: 'Password must be at least 8 characters and include uppercase, lowercase, and a number'})
         }
 
@@ -76,18 +67,11 @@ const registerUser = async (req, res, next) => {
         })
 
         const user = await newUser.save();
-
-        // after storing the user in DB, we will provide one token. Using that, the user can login in the application.
-        // the token will pe created using the user's ID property. Whenever the user will be created, in their property will be generated one '_id' 
-
         const token = createToken(user._id)
-        // 201 Created — cont nou creat cu succes
         res.status(201).json({ success: true, token })
 
    } catch (error) { next(error) }
 }
-
-// ----- Route for Admin Login -----
 
 const adminLogin = async (req, res, next) => {
 
@@ -96,7 +80,6 @@ const adminLogin = async (req, res, next) => {
         const { email, password } = req.body;
 
         if (email !== process.env.ADMIN_EMAIL) {
-            // 401 Unauthorized — credențiale admin greșite
             return res.status(401).json({ success: false, message: 'Invalid admin credentials' })
         }
 
@@ -115,32 +98,25 @@ const adminLogin = async (req, res, next) => {
     } catch (error) { next(error) }
 }
 
-// ----- Forgot Password -----
 const forgotPassword = async (req, res, next) => {
 
     try {
         
         const { email } = req.body;
         
-
         const user = await userModel.findOne({ email })
 
-        // Always respond with success so we don't reveal whether an email exists
         if(!user) {
-            // 200 intentionat — nu vrem să dezvăluim dacă emailul există în sistem
             return res.status(200).json({ success: true, message: 'If that email exists, a reset link has been sent.' })
         }
 
-        // Generate a secure random token (raw = sent in email, hashed = stored in DB)
         const rawToken = crypto.randomBytes(32).toString('hex');
         const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex')
 
-        // Save hashed token + expiry to the user document
         user.resetPasswordToken = hashedToken;
-        user.resetPasswordExpires = Date.now() + 60 * 60 * 1000;  // 1h from now
+        user.resetPasswordExpires = Date.now() + 60 * 60 * 1000;  
         await user.save();
 
-        // Build the reset URL — points to the React frontend page
         const resetPasswordUrl = `${process.env.FRONTEND_URL}/reset-password/${rawToken}`
 
         // Send the email
@@ -167,24 +143,19 @@ const forgotPassword = async (req, res, next) => {
     } catch (error) { next(error) }
 }
 
-// ----- Reset Password ----- 
 const resetPassword = async (req, res, next) => {
 
     try {
         const {token} = req.params;
         const {password} = req.body;
-
-        // Hash the raw token from the URL to compare with what's stored
         const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 
-        // Find user with matching token that hasn't expired yet
         const user = await userModel.findOne({
             resetPasswordToken: hashedToken,
             resetPasswordExpires: {$gt: Date.now()}  // expiry must be in the future
         })
 
         if(!user) {
-            // 400 Bad Request — tokenul e invalid sau expirat
             return res.status(400).json({ success: false, message: 'Reset link is invalid or has expired.' })
         }
 
@@ -204,8 +175,6 @@ const resetPassword = async (req, res, next) => {
         // Hash the new password and save
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt)
-
-        // Clear the reset token fields so the link can't be reused
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
         await user.save();
@@ -216,7 +185,6 @@ const resetPassword = async (req, res, next) => {
 }
 
 // ----- MY PROFILE -----
-
 const getProfile = async (req, res, next) => {
     try {
         const user = await userModel.findById(req.userId).select('-password -resetPasswordToken -resetPasswordExpires')
@@ -242,9 +210,9 @@ const updateProfile = async (req, res, next) => {
         const updatedUser = await userModel.findByIdAndUpdate(req.userId,
             {
                 name: name.trim(),
-                phone: phone?.trim() || ''   // optional chaining — înseamnă "dacă phone există, apelează .trim(), dacă nu există nu arunca eroare"
+                phone: phone?.trim() || ''   
             },
-            {new: true}   // returneaza userul dupa modificare, fara new: true, Mongo returneaza userul inainte de modificare
+            {new: true}   
         ).select('-password -resetPasswordToken -resetPasswordExpires')
 
         res.json({ success: true, user: updatedUser, message: 'Profile updated successfully' })

@@ -27,13 +27,11 @@ const inputStyle = {
 
 const Add = ({token}) => {
 
-  // Store all data in state
   const [image1, setImage1] = useState(false)
   const [image2, setImage2] = useState(false)
   const [image3, setImage3] = useState(false)
   const [image4, setImage4] = useState(false)
 
-  // controlled input fields = that input field where we will add any changes that will update the value in the state variable
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
@@ -49,8 +47,7 @@ const Add = ({token}) => {
     e.preventDefault();
 
     try {
-      // We will add this formData in the body when we will add the API call. For that, we have to add all the images and product details in this formData
-
+     
       const formData = new FormData();
 
       formData.append('name', name);
@@ -64,15 +61,13 @@ const Add = ({token}) => {
       formData.append('category', category);
       formData.append('subCategory', subCategory);
       formData.append('bestseller', bestseller);
-      formData.append('sizes', JSON.stringify(sizes));  //it comes as array and we needed as string to add in formData
+      formData.append('sizes', JSON.stringify(sizes));  
 
-      // if image is aviable, then appent this image, else do not append
       image1 && formData.append('image1', image1)
       image2 && formData.append('image2', image2)
       image3 && formData.append('image3', image3)
       image4 && formData.append('image4', image4)
 
-      // send formData to the backend using API
       const response = await axios.post(backendUrl + "/api/product/add", formData, {headers:{ Authorization: `Bearer ${token}` }})
       
       if (response.data.success) {
@@ -108,15 +103,14 @@ const Add = ({token}) => {
   return ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 }
 
-  // reset sizes when category/subcategory changes so you don't keep stale selections
   const handleCategoryChange = (e) => {
     setCategory(e.target.value)
-    setSizes([])   // ← reset
+    setSizes([])  
   }
 
   const handleSubCategoryChange = (e) => {
     setSubcategory(e.target.value)
-    setSizes([])   // ← reset
+    setSizes([])  
   }
 
   return (

@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
 
-// Add logic with which we can connect our Mongoose package from MongoDB Atlas Server
-
-//each time we execute this function, then the mongoDB database will be connected to the project
 const connectDB = async () => {
 
     mongoose.connection.on('connected', () => {

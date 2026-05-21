@@ -5,11 +5,10 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
 const List = ({token}) => {
-  // GET data from the API
+
   const [list, setList] = useState([])
   const navigate = useNavigate()
 
-  // We'll run this function whenever this page will be loaded (using useEffect)
   const fetchList = async () => {
     try {
 
@@ -33,7 +32,7 @@ const List = ({token}) => {
 
       if (response.data.success) {
         toast.success(response.data.message)
-        await fetchList() // display again the list after changes (removing items)
+        await fetchList() 
       } else {
         toast.error(response.data.message)
       }

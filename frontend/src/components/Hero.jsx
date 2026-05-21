@@ -105,11 +105,9 @@ const Hero = () => {
               alt="New Collection"
               className="w-full h-full object-cover object-top brightness-[0.96] saturate-[0.92]"
             />
-            {/* Subtle blush tint overlay */}
+
             <div className="absolute inset-0 bg-[linear-gradient(160deg,rgba(234,197,190,0.12)_0%,transparent_60%)]" />
           </div>
-
-          {/* Small floating card — top left */}
           <div
             className="absolute top-[8%] left-[4%] min-w-[120px] rounded-[2px] py-[14px] px-[18px] shadow-[0_8px_30px_rgba(0,0,0,0.07)]"
             style={{ background: "var(--white)" }}
@@ -134,7 +132,6 @@ const Hero = () => {
             />
           </div>
 
-          {/* Small floating stat — bottom right */}
           <div
             className="absolute bottom-[10%] right-[2%] rounded-[2px] px-[18px] py-[14px] shadow-[0_8px_30px_rgba(196,135,125,0.15)]"
             style={{ background: "var(--blush-light)" }}
@@ -151,7 +148,6 @@ const Hero = () => {
             </p>
           </div>
 
-          {/* Decorative dot cluster */}
           <div
             className="absolute pointer-events-none bottom-[20%] left-[5%] grid grid-cols-[repeat(4,8px)] gap-[6px] opacity-35"
           >

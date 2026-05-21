@@ -5,10 +5,6 @@ const addReview = async (req, res, next) => {
 
     try {
         const {productId, rating, comment} = req.body;
-
-         console.log('productId:', productId)
-        console.log('rating:', rating)
-        console.log('comment:', comment)
         const userId = req.userId;
 
         if (!productId || !rating || !comment?.trim()) {
@@ -32,13 +28,11 @@ const addReview = async (req, res, next) => {
         
         const newReview = new reviewModel(reviewDetails);
         await newReview.save()
-
-        // 201 Created — review nou adăugat
         res.status(201).json({ success: true, message: "Review Added" })
+
       } catch (error) {
 
         if (error.code === 11000) {
-          // 409 Conflict — userul a mai lăsat deja un review pentru acest produs
           return res.status(409).json({ success: false, message: "You have already reviewed this product." })
         }
 
@@ -53,8 +47,8 @@ const getReviews = async (req, res, next) => {
 
     const reviews = await reviewModel
       .find({ productId: new mongoose.Types.ObjectId(productId) })
-      .populate('userId', 'name')  // joins User collection, fetches only 'name'
-      .sort({createdAt: -1})  // newest reviews first (bonus improvement)
+      .populate('userId', 'name') 
+      .sort({createdAt: -1}) 
 
     res.status(200).json({ success: true, reviews });
 

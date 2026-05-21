@@ -9,7 +9,6 @@ const SearchBar = () => {
     const [visible, setVisible] = useState(false);
     const location = useLocation();
 
-    // The search bar shows only when we are on the '/collection' page
     useEffect(() => {
         if(location.pathname.includes('collection')) {
             setVisible(true);

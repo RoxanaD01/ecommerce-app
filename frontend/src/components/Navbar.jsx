@@ -115,7 +115,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* ── Mobile Sidebar ── */}
+      {/*  Mobile Sidebar  */}
       <div
         className={`fixed top-0 right-0 h-full z-50 transition-all duration-500 ${visible ? 'w-72' : 'w-0'} overflow-hidden`}
         style={{ background: 'var(--cream)', borderLeft: '1px solid var(--text-faint)' }}

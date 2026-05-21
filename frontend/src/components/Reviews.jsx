@@ -15,7 +15,6 @@ const Reviews = ({ onReviewAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // user must be logged in to leave a review
     if (!token) {
       toast.error('Please log in to leave a review.')
       return

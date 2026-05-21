@@ -160,7 +160,7 @@ const Collection = () => {
 
         {products.length === 0 ? (
 
-          // Loading skeleton - apare cand produsele nu s-au incarcat inca
+          // Loading skeleton 
           <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 gap-y-8'>
             {[...Array(8)].map((_, i) => (
               <div key={i} className='animate-pulse'>
@@ -173,15 +173,14 @@ const Collection = () => {
 
         ) : filteredProducts.length === 0 ? (
 
-          // Empty state — filtrele nu au returnat niciun rezultat
           <div className='flex flex-col items-center justify-center py-24 text-center'>
             <p className='text-sm tracking-widest mb-3 tracking-[0.15em]' style={{ color: 'var(--text-soft)'}}>NO PRODUCTS FOUND</p>
             <p className='text-cs' style={{ color: 'var(--text-faint)' }}>Try adjusting your filters or search term</p>
             <button onClick={() => {setCategory([]); setSubCategory([])}} className='mt-6 text-xs tracking-[0.15em] px-6 py-2.5 bg-transparent ' style={{border: '1px solid var(--text-faint)', color: 'var(--text-mid)' }}>CLEAR FILTERS</button>
           </div>
+          
         ) : (
 
-          // Produsele normale
           <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 gap-y-8'>
             {filteredProducts.map((item, index) => (
               <ProductItem
