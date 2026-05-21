@@ -12,26 +12,22 @@ import reviewRouter from "./routes/reviewRoute.js";
 import { stripeWebhook } from "./controllers/orderController.js";
 
 // ----- App Config -----
-
-const app = express(); // instance of the express server
-const port = process.env.PORT || 4000; // if the PORT nr is aviable in the env variable then will be user, if NOT we will use port nr 4000
+const app = express(); 
+const port = process.env.PORT || 4000; 
 connectDB();
 connectCloudinary();
 
 // ----- Middlewares -----
-
-// CORS restrictionat la domeniile tale
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  process.env.FRONTEND_URL, // e.g. https://yourshop.com
-  process.env.ADMIN_URL, // e.g. https://admin.yourshop.com
-].filter(Boolean); // removes undefined if env vars aren't set yet
+  process.env.FRONTEND_URL, 
+  process.env.ADMIN_URL, 
+].filter(Boolean); 
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. Postman, server-to-server)
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
       callback(new Error(`CORS: origin ${origin} is not allowed`));
@@ -39,16 +35,13 @@ app.use(
   }),
 );
 
-// The webhook MUST be registered BEFORE express.json() so the body arrives as raw Buffer.
-// Stripe verifies the raw bytes — once express.json() parses them, signature verification breaks.
-
 app.post(
   "/api/order/webhook",
   express.raw({ type: "application/json" }), // raw bytes
   stripeWebhook,
 );
 
-app.use(express.json()); // wathever request we will have, it will be parsed using JSON
+app.use(express.json()); 
 
 // ----- API Endpoints -----
 app.use("/api/user", userRouter);
@@ -58,13 +51,10 @@ app.use("/api/order", orderRouter);
 app.use("/api/review", reviewRouter);
 
 app.get("/", (req, res) => {
-  // Whenever we'll open locahost port 4000 will be deplayed this message
   res.send("API Working");
 });
 
 // ----- ERROR middleware -----
-// Global error handler — prinde orice eroare aruncată cu next(error) din controllere
-
 app.use((err, req, res, next) => {
   console.error(err.stack);
   const isProduction = process.env.NODE_ENV === 'production';
@@ -74,5 +64,4 @@ app.use((err, req, res, next) => {
 });
 
 // ----- START the server -----
-
 app.listen(port, () => console.log("Server started on PORT: " + port));
