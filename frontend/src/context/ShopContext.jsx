@@ -18,6 +18,12 @@ const ShopContextProvider = (props) => {
   const [tokenLoaded, setTokenLoaded] = useState(false);
   const navigate = useNavigate();
 
+  const logout = useCallback(() => {
+  localStorage.removeItem("token");
+  setToken("");
+  setCartItems({});
+}, []);
+
   const addToCart = useCallback(async (itemId, size) => {
     // If NOT select the size, receive a notification and not add the product to the cart
     if (!size) {
@@ -49,11 +55,16 @@ const ShopContextProvider = (props) => {
           {headers:{ Authorization: `Bearer ${token}` }},
         );
       } catch (error) {
+        if (error.response?.status === 401) {
+          logout();
+          toast.info("Session expired. Please log in again.");
+          return;
+        }
         console.log(error);
         toast.error(error.message);
       }
     }
-  },[cartItems, token, backendUrl]);
+  },[cartItems, token, backendUrl, logout]);
 
    const updateQuantity = useCallback(async (itemId, size, quantity) => {
     let cartData = structuredClone(cartItems);
@@ -68,11 +79,16 @@ const ShopContextProvider = (props) => {
           {headers:{ Authorization: `Bearer ${token}` } },
         );
       } catch (error) {
+        if (error.response?.status === 401) {
+          logout();
+          toast.info("Session expired. Please log in again.");
+          return;
+        }
         console.log(error);
         toast.error(error.message);
       }
     }
-  },[cartItems, token, backendUrl]);
+  },[cartItems, token, backendUrl,logout]);
 
   // This function calculates the TOTAL number of items in the cart. It is usually used for showing the cart count in the navbar
   const cartCount = useMemo(() => {
@@ -132,10 +148,15 @@ const ShopContextProvider = (props) => {
         setCartItems(response.data.cartData);
       }
     } catch (error) {
+      if (error.response?.status === 401) {
+      logout();
+      toast.info("Session expired. Please log in again.");
+      return;
+    }
       console.log(error);
       toast.error(error.message);
     }
-  },[backendUrl]);
+  },[backendUrl, logout]);
 
   useEffect(() => {
     getProductsData();
@@ -162,8 +183,8 @@ const ShopContextProvider = (props) => {
     cartItems,
     addToCart,
     cartCount,
-    getCartCount: () => cartCount,   // păstrat pentru compatibilitate
-    getCartAmount: () => cartAmount, // păstrat pentru compatibilitate
+    getCartCount: () => cartCount,   
+    getCartAmount: () => cartAmount, 
     updateQuantity,
     cartAmount,
     navigate,

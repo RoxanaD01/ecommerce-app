@@ -20,16 +20,12 @@ const authUser = async (req, res, next) => {
         req.userId = token_decode.id    // userId udef for adding, removing etc comes from token id
         next();
 
-    } catch (error) { next(error) }
-}
-
-/*const authUser = async (req, res, next) => {
-
-    const { token } = req.headers;   // take the token from the header
-
-    if (!token) {
-        return res.json({success: false, message: 'Not Authorized. login Again'})
+    } catch (error) {
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({ success: false, message: 'Session expired. Please log in again' })
+        }
+        return res.status(401).json({ success: false, message: 'Invalid token. Please log in again' })
     }
-}*/
+}
 
 export default authUser;
