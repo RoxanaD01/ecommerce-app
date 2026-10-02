@@ -1,4 +1,3 @@
-// Within CONTEXT we can store all the common variables and state variables at one place
 import { toast } from "react-toastify";
 import { createContext, useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +24,6 @@ const ShopContextProvider = (props) => {
 }, []);
 
   const addToCart = useCallback(async (itemId, size) => {
-    // If NOT select the size, receive a notification and not add the product to the cart
     if (!size) {
       toast.error("Select Product Size");
       return;
@@ -46,7 +44,6 @@ const ShopContextProvider = (props) => {
 
     setCartItems(cartData);
 
-    // if token is aviable = we're logged in
     if (token) {
       try {
         await axios.post(
@@ -90,16 +87,12 @@ const ShopContextProvider = (props) => {
     }
   },[cartItems, token, backendUrl,logout]);
 
-  // This function calculates the TOTAL number of items in the cart. It is usually used for showing the cart count in the navbar
   const cartCount = useMemo(() => {
     let totalCount = 0;
     for (const productId in cartItems) {
-      // Loop through each PRODUCT(items) in the cart. Example: p1, p2
       for (const size in cartItems[productId]) {
-        // Loop through each SIZE(item) of that product. // Example: M, L, S
         if (cartItems[productId][size] > 0) {
-          // if in the cartItems we have the product[items] with the particular size[item], quantity > 0
-          totalCount += cartItems[productId][size]; // Add quantity to the total count
+          totalCount += cartItems[productId][size]; 
         }
       }
     }
@@ -163,7 +156,6 @@ const ShopContextProvider = (props) => {
   }, [getProductsData]);
 
   useEffect(() => {
-    // if the token is not aviable after refresh, then take the token from local storage so that we remain logged in
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);

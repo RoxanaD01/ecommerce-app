@@ -31,8 +31,8 @@ const PlaceOrder = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault()
-    if (loading) return  // ← protecție extra
-    setLoading(true)     // ← dezactivează butonul
+    if (loading) return 
+    setLoading(true)
     try {
       let orderItems = []
       for (const productId in cartItems) {
@@ -69,7 +69,7 @@ const PlaceOrder = () => {
       console.log(error)
       toast.error(error.message)
     } finally {
-        setLoading(false)  // ← reactivează doar dacă ceva a mers prost
+        setLoading(false) 
     }
   }
 

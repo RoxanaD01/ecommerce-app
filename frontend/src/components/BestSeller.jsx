@@ -1,4 +1,3 @@
-// Here we will get all the products data where bestseller = true;
 import { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import Title from './Title'
@@ -11,8 +10,8 @@ const BestSeller = () => {
 
     useEffect(() => {
         const bestProduct = products.filter((item) => (item.bestseller));
-        setBestSeller(bestProduct.slice(0,5));  // display only 5 products
-    },[products])  // we have to execute this useEffect() whenever the products gets updated
+        setBestSeller(bestProduct.slice(0,5));
+    },[products]) 
 
   return (
      <section className='my-16'>

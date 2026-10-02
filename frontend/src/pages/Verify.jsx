@@ -47,7 +47,7 @@ const Verify = () => {
     <div className='min-h-[60vh] flex items-center justify-center px-4'>
         <div className='flex flex-col items-center gap-4 bg-white border border-gray-200 rounded-2xl p-12 max-w-sm w-full shadow-sm text-center' >
 
-            {/* Spinner / Icon */}
+            {/* Spinner */}
             {
                 status === 'success' && (
                     <div className='w-16 h-16 rounded-full bg-green-50 flex items-center justify-center'>

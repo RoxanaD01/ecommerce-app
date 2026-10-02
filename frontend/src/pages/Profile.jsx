@@ -8,7 +8,6 @@ const Profile = () => {
 
   const {backendUrl, token, setToken, navigate} = useContext(ShopContext)
 
-  // Profile info state
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -16,7 +15,6 @@ const Profile = () => {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
 
-  // Change password state
   const [passwordSection, setPasswordSection] = useState(false)
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -26,7 +24,6 @@ const Profile = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [changePassword, setChangePassword] = useState(false)
 
-  // Load profile on mount
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -51,7 +48,6 @@ const Profile = () => {
     if (token) fetchProfile()
   },[token])
 
-  // Save profile changes
   const handleSave = async (e) => {
     e.preventDefault()
     setSaving(true)
@@ -73,7 +69,6 @@ const Profile = () => {
     }
   }
 
-  // Change password
 const handleChangePassword = async (e) => {
   e.preventDefault()
   if(newPassword !== confirmPassword) {
@@ -120,7 +115,7 @@ const handleChangePassword = async (e) => {
 
       <div className='max-w-xl'>
 
-        {/* ── Avatar + name display ── */}
+        {/*  Avatar + name display */}
         <div className='flex items-center gap-5 mb-10' style={{ borderBottom: '1px solid var(--text-faint)' }}>
           <div className='w-16 h-16 rounded-full flex items-center justify-center text-xl font-medium' style={{ background: 'var(--blush-light)', color: 'var(--rose)' }}>
             {
@@ -137,7 +132,7 @@ const handleChangePassword = async (e) => {
           </div>
         </div>
         
-        {/* ── Edit Profile Form ── */}
+        {/*  Edit Profile Form  */}
         <form onSubmit={handleSave}>
           <p className='text-xs tracking-widest mb-6 tracking-widest' style={{ color: 'var(--text-soft)', }}>
             PERSONAL INFORMATION
@@ -206,7 +201,7 @@ const handleChangePassword = async (e) => {
 
         </form>
 
-        {/* ── Change Password Section ── */}      
+        {/*  Change Password Section  */}      
         <div className='mt-12 pt-8' style={{ borderTop: '1px solid var(--text-faint)' }}> 
           <div onClick={() => setPasswordSection(!(passwordSection))} className='flex items-center justify-between cursor-pointer mb-6'>
             <p className='text-xs tracking-widest' style={{ color: 'var(--text-soft)'}}>

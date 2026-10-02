@@ -30,7 +30,6 @@ const Edit = ({ token }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Each slot: existing URL (string) or new File object or null
   const [image1, setImage1] = useState(null);
   const [image2, setImage2] = useState(null);
   const [image3, setImage3] = useState(null);
@@ -44,7 +43,6 @@ const Edit = ({ token }) => {
   const [bestseller, setBestseller] = useState(false);
   const [sizes, setSizes] = useState([]);
 
-  // Load existing product data
   useEffect(() => {
     const load = async () => {
       try {
@@ -61,7 +59,7 @@ const Edit = ({ token }) => {
           setSubcategory(product.subCategory);
           setBestseller(product.bestseller);
           setSizes(product.sizes);
-          // Pre-fill image slots with existing URLs
+       
           if (product.image[0]) setImage1(product.image[0]);
           if (product.image[1]) setImage2(product.image[1]);
           if (product.image[2]) setImage3(product.image[2]);
@@ -111,9 +109,9 @@ const Edit = ({ token }) => {
   };
 
   const getPreview = (img) => {
-    if (!img) return assets.upload_area; // return placeholder
-    if (typeof img === "string") return img; // return existing Cludinary URL
-    return URL.createObjectURL(img); // newly chosen File
+    if (!img) return assets.upload_area; 
+    if (typeof img === "string") return img; 
+    return URL.createObjectURL(img); 
   };
 
   const onSubmitHandler = async (e) => {
@@ -135,13 +133,11 @@ const Edit = ({ token }) => {
       formData.append("bestseller", bestseller);
       formData.append("sizes", JSON.stringify(sizes));
 
-      // Only append if it's a new File (not an existing URL string)
       if (image1 instanceof File) formData.append("image1", image1);
       if (image2 instanceof File) formData.append("image2", image2);
       if (image3 instanceof File) formData.append("image3", image3);
       if (image4 instanceof File) formData.append("image4", image4);
 
-      // send formData to the backend using API
       const response = await axios.post(
         backendUrl + "/api/product/edit",
         formData,
@@ -181,7 +177,7 @@ const Edit = ({ token }) => {
           <div className='w-8 h-px' style={{ background: 'var(--blush-dim)' }} />
         </div>
    
-        {/* Images — shows existing, lets you replace individually */}
+        {/* Images*/}
         <div>
           <span style={labelStyle}>PRODUCT IMAGES</span>
           <div className='flex gap-3'>

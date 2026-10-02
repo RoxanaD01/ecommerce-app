@@ -11,12 +11,10 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 
-// Take this backend address from env variable
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const currency = 'RON'
 
 const App = () => {
-  // If the token is aviable (= the user is authenticated) the admin component will be displayed, if NOT, will be displayed the Login component
 
   const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : '');
 
@@ -25,16 +23,15 @@ const App = () => {
     res => res, 
     err => {
         if (err.response?.status === 401) {
-          setToken('')                            // șterge tokenul → userul e redirecționat la login
+          setToken('')                           
         } 
         return Promise.reject(err)
       }
     )
-    // cleanup — important să elimini interceptorul când se schimbă token-ul
+   
     return () => axios.interceptors.response.eject(interceptor)
   },[token])
 
-  // Whenever this token will be updated, then this function will be executed and will store that token in the localStorage
   useEffect(() => {
     token ? localStorage.setItem('token', token) : localStorage.removeItem('token')
   }, [token])

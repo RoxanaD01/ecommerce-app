@@ -73,7 +73,7 @@ const ResetPassword = () => {
       >
 
         {done ? (
-          /* ── Success state ── */
+
           <div className='flex flex-col items-center text-center gap-5'>
             <div
               className='w-14 h-14 rounded-full flex items-center justify-center mb-2'
@@ -99,7 +99,7 @@ const ResetPassword = () => {
           </div>
 
         ) : (
-          /* ── Form state ── */
+
           <>
             <div className='text-center mb-8'>
               <h2 className='playfair text-3xl mb-2' style={{ color: 'var(--text-dark)', fontWeight: 400 }}>
@@ -137,7 +137,6 @@ const ResetPassword = () => {
                 style={inputStyle}
               />
 
-              {/* Live match indicator */}
               {confirm && (
                 <p
                   className='text-xs -mt-1'

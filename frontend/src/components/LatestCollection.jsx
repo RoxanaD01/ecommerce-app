@@ -7,7 +7,6 @@ const LatestCollection = () => {
   const { products } = useContext(ShopContext);
   const [latestProducts, setLatestProducts] = useState([]);
 
-  // Whenever this component will get loaded, from this PRODUCTS data we have to load the 10 products in this latestProducts state. In useEffect we use [] because this function will be ecxecuted once when the component gets loaded.
   useEffect(() => {
     setLatestProducts(products.slice(0, 10));
   }, [products]);
@@ -25,7 +24,6 @@ const LatestCollection = () => {
         </p>
       </div>
 
-      {/* Rendering Products */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
         {latestProducts.map((item) => {
     return (
