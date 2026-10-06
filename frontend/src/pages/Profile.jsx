@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 
 const Profile = () => {
 
-  const {backendUrl, token, setToken, navigate} = useContext(ShopContext)
+  const {backendUrl, token} = useContext(ShopContext)
 
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)

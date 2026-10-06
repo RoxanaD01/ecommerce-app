@@ -20,6 +20,6 @@ const filter = (req, file, callback) => {
     }
 }
 
-const upload = multer({storage, filter, limits:{fileSize: 5 * 1024 * 1024}});   // 5 MB max per file
+const upload = multer({storage, fileFilter:filter, limits:{fileSize: 5 * 1024 * 1024}});   // 5 MB max per file
 
 export default upload;

@@ -7,7 +7,6 @@ import ProductItem from '../components/ProductItem'
 const Collection = () => {
   const { products, search, showSearch } = useContext(ShopContext)
   const [showFilter, setShowFilter] = useState(false)
-  const [filterProducts, setFilterProducts] = useState([])
   const [category, setCategory] = useState([])
   const [subCategory, setSubCategory] = useState([])
   const [sortType, setSortType] = useState('relevant')
@@ -182,7 +181,7 @@ const Collection = () => {
         ) : (
 
           <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 gap-y-8'>
-            {filteredProducts.map((item, index) => (
+            {filteredProducts.map(item => (
               <ProductItem
                 key={item._id} id={item._id} name={item.name} price={item.price} image={item.image}
               />

@@ -128,7 +128,7 @@ const verifyStripe = async (req, res, next) => {
 }
 
 // ----- WEBHOOK -----
-const stripeWebhook = async (req, res, next) => {
+const stripeWebhook = async (req, res) => {
     const signature = req.headers['stripe-signature']
 
     let event
