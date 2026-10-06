@@ -52,7 +52,7 @@ const registerUser = async (req, res, next) => {
             minNumbers: 1,
             minSymbols: 1,
         })) {
-            return res.status(400).json({success: false, message: 'Password must be at least 8 characters and include uppercase, lowercase, and a number'})
+            return res.status(400).json({success: false, message: 'Password must be at least 8 characters and include uppercase, lowercase, a number and a symbol'})
         }
 
         // Hashing user password
@@ -168,7 +168,7 @@ const resetPassword = async (req, res, next) => {
         })) {
             return res.status(400).json({
                 success: false,
-                message: 'Password must be at least 8 characters and include uppercase, lowercase, and a number'
+                message: 'Password must be at least 8 characters and include uppercase, lowercase, a number and a symbol'
             })
         }
 
@@ -244,7 +244,7 @@ const changePassword = async (req, res, next) => {
         })) {
             return res.status(400).json({
                 success: false,
-                message: 'Password must be at least 8 characters and include uppercase, lowercase, and a number'
+                message: 'Password must be at least 8 characters and include uppercase, lowercase, a number and a symbol'
             })
         }
 

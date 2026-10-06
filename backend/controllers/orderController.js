@@ -8,8 +8,10 @@ const deliveryCharge = 10
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const computeAmount = async (items) => {
+    if(!Array.isArray(items) || items.length === 0) throw new Error('Cart is empty')
     let total = 0;
     for (const item of items) {
+        if(!Number.isInteger(item.quantity) || item.quantity < 1) throw new Error('Invalid quantity')
         const product = await productModel.findById(item._id)
         if(!product) throw new Error (`Product ${item._id} not found`)
         total += product.price * item.quantity
@@ -181,6 +183,10 @@ const updateStatus = async (req, res, next) => {
     try {
         const {orderId, status} = req.body
 
+        const allowedStatus = ['Order Placed', 'Packing', 'Shipped', 'Out for delivery', 'Delivered']
+        if(!allowedStatus.includes(status)) {
+            return res.status(400).json({ success: false, message: 'Invalid status'})
+        }
         await orderModel.findByIdAndUpdate(orderId, {status})
         res.status(200).json({ success: true, message:"Status Updated" })
         

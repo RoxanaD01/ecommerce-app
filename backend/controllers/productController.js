@@ -1,6 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import productModel from "../models/productModel.js";
 import mongoose from "mongoose";
+import fs from "fs/promises"
 
 const addProduct = async (req, res, next) => {
 
@@ -20,6 +21,7 @@ const addProduct = async (req, res, next) => {
         let result = await cloudinary.uploader.upload(item.path, {
           resource_type: "image",
         });
+        await fs.unlink(item.path);
         return result.secure_url;
       }),
     );
@@ -116,6 +118,7 @@ const editProduct = async (req, res, next) => {
       newImages.map(async (file, index) => {
         if (file) {
           const result = await cloudinary.uploader.upload(file.path, {resource_type: 'image'});
+          await fs.unlink(item.path);
           return result.secure_url;
         }
         return existingImages[index] || null;   
