@@ -80,7 +80,7 @@ const PlaceOrder = () => {
       style={{ borderTop: '1px solid var(--text-faint)' }}
     >
 
-      {/* ── Left: Delivery Info ── */}
+      {/* Left: Delivery Info */}
       <div className='flex flex-col gap-4 w-full sm:max-w-[480px]'>
         <div className='mb-4'>
           <Title text1='DELIVERY' text2='INFORMATION' />
@@ -116,7 +116,7 @@ const PlaceOrder = () => {
           className={inputClass} style={inputStyle} type='number' placeholder='Phone' />
       </div>
 
-      {/* ── Right: Summary + Payment ── */}
+      {/* Right: Summary + Payment */}
       <div className='w-full sm:min-w-72'>
 
         <CartTotal />

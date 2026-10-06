@@ -34,7 +34,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* ── Desktop Navbar ── */}
+      {/* Desktop Navbar */}
       <nav
         className='flex items-center justify-between px-6 sm:px-12 py-5'
         style={{ borderBottom: '1px solid var(--text-faint)', background: 'var(--cream)' }}
@@ -115,7 +115,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/*  Mobile Sidebar  */}
+      {/* Mobile Sidebar */}
       <div
         className={`fixed top-0 right-0 h-full z-50 transition-all duration-500 ${visible ? 'w-72' : 'w-0'} overflow-hidden`}
         style={{ background: 'var(--cream)', borderLeft: '1px solid var(--text-faint)' }}

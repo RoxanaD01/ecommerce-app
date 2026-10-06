@@ -218,7 +218,7 @@ const Product = () => {
         </div>
       </div>
 
-      {/* ── Tabs: Description / Reviews ── */}
+      {/* Tabs: Description / Reviews */}
       <div className="mt-20">
         <div className="flex">
           {["description", "reviews"].map((tab) => (

@@ -1,4 +1,3 @@
-// Create a basic server
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
@@ -11,7 +10,6 @@ import orderRouter from "./routes/orderRoute.js";
 import reviewRouter from "./routes/reviewRoute.js";
 import { stripeWebhook } from "./controllers/orderController.js";
 
-// ----- App Config -----
 const app = express(); 
 const port = process.env.PORT || 4000; 
 connectDB();

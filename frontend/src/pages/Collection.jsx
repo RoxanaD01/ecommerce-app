@@ -71,7 +71,7 @@ const Collection = () => {
   return (
     <div className='flex flex-col sm:flex-row gap-8 pt-10' style={{ borderTop: '1px solid var(--text-faint)' }}>
 
-      {/* ── Filter Sidebar ── */}
+      {/* Filter Sidebar */}
       <div className='min-w-56'>
 
         <button
@@ -134,7 +134,7 @@ const Collection = () => {
         </div>
       </div>
 
-      {/* ── Products Area ── */}
+      {/* Products Area */}
       <div className='flex-1'>
 
         <div className='flex justify-between items-center mb-8'>
