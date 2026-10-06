@@ -118,7 +118,7 @@ const editProduct = async (req, res, next) => {
       newImages.map(async (file, index) => {
         if (file) {
           const result = await cloudinary.uploader.upload(file.path, {resource_type: 'image'});
-          await fs.unlink(item.path);
+          await fs.unlink(file.path);
           return result.secure_url;
         }
         return existingImages[index] || null;   
