@@ -17,6 +17,12 @@ const ShopContextProvider = (props) => {
   const [tokenLoaded, setTokenLoaded] = useState(false);
   const navigate = useNavigate();
 
+  const logout = useCallback(() => {
+  localStorage.removeItem("token");
+  setToken("");
+  setCartItems({});
+}, []);
+
   const addToCart = useCallback(async (itemId, size) => {
     if (!size) {
       toast.error("Select Product Size");
@@ -46,11 +52,16 @@ const ShopContextProvider = (props) => {
           {headers:{ Authorization: `Bearer ${token}` }},
         );
       } catch (error) {
+        if (error.response?.status === 401) {
+          logout();
+          toast.info("Session expired. Please log in again.");
+          return;
+        }
         console.log(error);
         toast.error(error.message);
       }
     }
-  },[cartItems, token, backendUrl]);
+  },[cartItems, token, backendUrl, logout]);
 
    const updateQuantity = useCallback(async (itemId, size, quantity) => {
     let cartData = structuredClone(cartItems);
@@ -65,11 +76,16 @@ const ShopContextProvider = (props) => {
           {headers:{ Authorization: `Bearer ${token}` } },
         );
       } catch (error) {
+        if (error.response?.status === 401) {
+          logout();
+          toast.info("Session expired. Please log in again.");
+          return;
+        }
         console.log(error);
         toast.error(error.message);
       }
     }
-  },[cartItems, token, backendUrl]);
+  },[cartItems, token, backendUrl,logout]);
 
   const cartCount = useMemo(() => {
     let totalCount = 0;
@@ -125,10 +141,15 @@ const ShopContextProvider = (props) => {
         setCartItems(response.data.cartData);
       }
     } catch (error) {
+      if (error.response?.status === 401) {
+      logout();
+      toast.info("Session expired. Please log in again.");
+      return;
+    }
       console.log(error);
       toast.error(error.message);
     }
-  },[backendUrl]);
+  },[backendUrl, logout]);
 
   useEffect(() => {
     getProductsData();
@@ -154,7 +175,7 @@ const ShopContextProvider = (props) => {
     cartItems,
     addToCart,
     cartCount,
-    getCartCount: () => cartCount,  
+    getCartCount: () => cartCount,   
     getCartAmount: () => cartAmount, 
     updateQuantity,
     cartAmount,
